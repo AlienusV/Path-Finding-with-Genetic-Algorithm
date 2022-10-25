@@ -9,7 +9,7 @@ Dots:
 The members of these populations are called Dots. Every dot in a population are industinguishable except their brains. 
 
 Brain:
-A Dot brain is a 2D array consisting of 2D vectors. These 2D vectors are considered as an acceleration vector. These acceleration vectors are added one after another to create a velocity vector. This velocity vector is clipped according to their max speed and added to their position. The formula for the brain size of a population is FULL_PATH_LENGHT = BRAIN_SIZE X MAX_SPEED.  
+A Dot brain is a 2D array consisting of 2D vectors. These 2D vectors are considered as an acceleration vector. These acceleration vectors are added one after another to create a velocity vector. This velocity vector is clipped according to their max speed and added to their position. The formula for the brain size of a population is FULL_PATH_LENGTH = BRAIN_SIZE X MAX_SPEED.  
 
 Decision and Mutation Rates:
 Decision Rate determines whether the Dot decides (the accelereation vector becomes the pointing unit vector from the dot to the next reward, this vector gets stored for the next generations) or remembers (remembers what their ancestor would do in this position). Mutation Rate affects every single brain cell and determines if the brain cell stays the same or gets mutated to a random vector.

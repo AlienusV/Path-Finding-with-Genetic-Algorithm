@@ -209,6 +209,10 @@ class Dot:
                                  (rewards[np.clip(self.rewardCount - 1, 0, len(self.rewards) - 1)]).midpoint, self.pos)
         else:
             shapes(self.pos, self.color1, self.shape)
+            # pygame.draw.line(screen1,self.color1,
+            #                 (rewards[np.clip(self.rewardCount, 0, len(self.rewards) - 1)]).midpoint, self.pos)
+            pygame.draw.line(screen1,self.color1,self.pos, self.pos + (self.acc * 20))
+            pygame.draw.line(screen1,self.color2,self.pos, self.pos + (self.vel * 10))
 
     def distanceTo(self, objPos):
         """determines the distance between itself and target obj, returns the difference vector and distance"""
@@ -222,22 +226,22 @@ class Dot:
         calculating the 'decision' is done by taking the difference vector and dividing it by the distance, thus getting
         the unit vector towards to next goal. after this decision it 'saves' in its brain to 'remember' it for the next
         generation. np.clip slows the movement"""
-        acc = np.array((0, 0))
+        self.acc = np.array((0, 0))
         chance = random.uniform(0, 1)
         if self.brain.size > self.brain.step:
             if chance > self.decisionRate:
-                acc = self.brain.directions[self.brain.step, :]
+                self.acc = self.brain.directions[self.brain.step, :]
                 self.brain.step += 1
             else:
                 difference, distance = self.distanceTo(
                     (rewards[np.clip(self.rewardCount, 0, len(self.rewards) - 1)]).midpoint)
                 pointingVector = difference / distance
                 self.brain.directions[self.brain.step, :] = pointingVector
-                acc = pointingVector
+                self.acc = pointingVector
                 self.brain.step += 1
         else:
             self.dead = True
-        self.vel = self.vel + acc
+        self.vel = self.vel + self.acc
         self.vel = np.clip(self.vel, -1 * self.maxVel, self.maxVel)
         self.pos = self.pos + self.vel
 
